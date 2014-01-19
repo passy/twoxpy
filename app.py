@@ -61,7 +61,7 @@ def before_request():
 
 
 @app.route('/')
-@utils.crossdomain('*')
+@utils.crossdomain(headers=['Cookie'])
 @require_login
 def index():
     return jsonify({

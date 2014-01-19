@@ -95,7 +95,7 @@ def login():
     return twitter.authorize(callback=callback_url or request.referrer or None)
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('twitter_oauth', None)
     return jsonify({'message': 'Logout successful'})

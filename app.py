@@ -61,7 +61,7 @@ def before_request():
 
 
 @app.route('/')
-@utils.crossdomain(headers=['Cookie'])
+@utils.crossdomain()
 @require_login
 def index():
     return jsonify({
@@ -71,7 +71,7 @@ def index():
 
 
 @app.route('/1.1/<path:endpoint>', methods=['GET', 'POST'])
-@utils.crossdomain('*')
+@utils.crossdomain()
 @require_login
 def proxy(endpoint):
 
@@ -96,6 +96,7 @@ def login():
 
 
 @app.route('/logout', methods=['POST'])
+@utils.crossdomain()
 def logout():
     session.pop('twitter_oauth', None)
     return jsonify({'message': 'Logout successful'})

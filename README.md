@@ -30,5 +30,3 @@ DEFAULT_ORIGIN=http://localhost:9000
 
 - Get this working with Python3. OAuthlib seems to have one incorrect conversion
   to bytes. Sigh...
-- Properly set up CORS
-- Find a proper redirection strategy.

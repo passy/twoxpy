@@ -3,8 +3,7 @@
 import os
 import functools
 from flask import Flask
-from flask import g, session, request, url_for, flash, jsonify, abort
-from flask import redirect, render_template
+from flask import g, session, request, url_for, jsonify
 from flask_oauthlib.client import OAuth
 
 import utils
@@ -41,7 +40,7 @@ def require_login(fn):
     @functools.wraps(fn)
     def _inner(*args, **kwargs):
         if g.user is None:
-            return redirect(url_for('login', next=request.url))
+            return json_abort(403, 'Login required. Go to /login.')
         return fn(*args, **kwargs)
 
     return _inner
@@ -99,17 +98,18 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('twitter_oauth', None)
-    return redirect(url_for('index'))
+    return jsonify({'message': 'Logout successful'})
 
 
 @app.route('/oauthorized')
 @twitter.authorized_handler
 def oauthorized(resp):
     if resp is None:
-        abort(403, 'You denied the request to sign in.')
+        json_abort(403, 'You denied the request to sign in.')
     else:
         session['twitter_oauth'] = resp
-    return redirect(url_for('index'))
+
+    return jsonify({'message': 'You are successfully authorized'})
 
 
 if __name__ == '__main__':

@@ -10,6 +10,12 @@ vim .env
 dotenv python app.py
 ```
 
+Or to run the production env:
+
+`dotenv honcho start`
+
+(Or `foreman` if you prefer that over `honcho`.)
+
 ### Example Environment
 
 ```

@@ -3,7 +3,7 @@
 import os
 import functools
 from flask import Flask
-from flask import g, session, request, url_for, jsonify
+from flask import g, session, request, url_for, jsonify, redirect
 from flask_oauthlib.client import OAuth
 
 import utils
@@ -109,7 +109,11 @@ def oauthorized(resp):
     else:
         session['twitter_oauth'] = resp
 
-    return jsonify({'message': 'You are successfully authorized'})
+    # Not quite sure about the security implications of this ...
+    if request.args['next']:
+        return redirect(request.args['next'])
+    else:
+        return jsonify({'message': 'You are successfully authorized'})
 
 
 if __name__ == '__main__':

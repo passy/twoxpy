@@ -26,6 +26,14 @@ DEBUG=True
 DEFAULT_ORIGIN=http://localhost:9000
 ```
 
+## API
+
+- `GET /login`: Redirects to the user login
+- `POST /logout`
+- `GET|POST /1.1/<path:endpoint>`: Proxies the signed request
+
+For more, just read the source, Luke. It's really not that much.
+
 ## TODO
 
 - Get this working with Python3. OAuthlib seems to have one incorrect conversion

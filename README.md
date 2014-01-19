@@ -21,5 +21,7 @@ DEBUG=True
 
 ## TODO
 
-Get this working with Python3. OAuthlib seems to have one incorrect conversion
-to bytes. Sigh...
+- Get this working with Python3. OAuthlib seems to have one incorrect conversion
+  to bytes. Sigh...
+- Properly set up CORS
+- Find a proper redirection strategy.

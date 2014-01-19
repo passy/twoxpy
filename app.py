@@ -83,7 +83,6 @@ def proxy(endpoint):
         method = twitter.post
         data = request.form.to_dict()
 
-    print('endpoint: ', endpoint)
     api_resp = method(endpoint, data=data)
 
     resp = jsonify(api_resp.data)

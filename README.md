@@ -1,6 +1,7 @@
 # Twoxpy
 
-A tiny Twitter REST API proxy with an unpronouncable name.
+A tiny Twitter REST API proxy with an unpronouncable name for Python 2 and
+Python 3.
 
 ## Setup
 

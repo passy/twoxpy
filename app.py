@@ -86,6 +86,8 @@ def proxy(endpoint):
         if content_type == 'application/json':
             data = request.stream.read()
         else:
+            # Otherwise keep the default
+            content_type = None
             data = request.form.to_dict()
 
     api_resp = method(endpoint,

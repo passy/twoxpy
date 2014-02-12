@@ -70,11 +70,12 @@ def index():
     })
 
 
-@app.route('/1.1/<path:endpoint>', methods=['GET', 'POST'])
-@utils.crossdomain()
+# Sending a Content-Type will require an additional OPTIONS pre-flight
+# request.
+@app.route('/1.1/<path:endpoint>', methods=['GET', 'POST', 'OPTIONS'])
+@utils.crossdomain(headers=['content-type'])
 @require_login
 def proxy(endpoint):
-
     if request.method == 'GET':
         method = twitter.get
         data = request.args.to_dict()

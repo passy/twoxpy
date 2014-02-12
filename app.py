@@ -76,14 +76,21 @@ def index():
 @utils.crossdomain(headers=['content-type'])
 @require_login
 def proxy(endpoint):
+    content_type = request.headers.get('content-type')
+
     if request.method == 'GET':
         method = twitter.get
         data = request.args.to_dict()
     else:
         method = twitter.post
-        data = request.form.to_dict()
+        if content_type == 'application/json':
+            data = request.stream.read()
+        else:
+            data = request.form.to_dict()
 
-    api_resp = method(endpoint, data=data)
+    api_resp = method(endpoint,
+                      content_type=content_type,
+                      data=data)
 
     resp = jsonify(api_resp.data)
     resp.status_code = api_resp.status

@@ -26,6 +26,22 @@ twitter = oauth.remote_app(
 )
 
 
+def enforce_referer(fn):
+
+    @functools.wraps(fn)
+    def _inner(*args, **kwargs):
+        referrer = request.headers.get('Referer')
+
+        if referrer is None or \
+            not referrer.startswith(os.environ.get('DEFAULT_ORIGIN')):
+
+            return json_abort(403, 'Missing or invalid Referrer.')
+
+        return fn(*args, **kwargs)
+
+    return _inner
+
+
 def json_abort(code, msg):
     response = jsonify({
         'message': msg
@@ -61,6 +77,7 @@ def before_request():
 
 
 @app.route('/')
+@enforce_referer
 @utils.crossdomain()
 @require_login
 def index():
@@ -73,6 +90,7 @@ def index():
 # Sending a Content-Type will require an additional OPTIONS pre-flight
 # request.
 @app.route('/1.1/<path:endpoint>', methods=['GET', 'POST', 'OPTIONS'])
+@enforce_referer
 @utils.crossdomain(headers=['content-type'])
 @require_login
 def proxy(endpoint):
@@ -106,6 +124,7 @@ def login():
 
 
 @app.route('/logout', methods=['POST'])
+@enforce_referer
 @utils.crossdomain()
 def logout():
     session.pop('twitter_oauth', None)

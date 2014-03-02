@@ -25,6 +25,7 @@ CONSUMER_SECRET=my_secret
 SECRET=cGLdIOw3ReC9WiZjHlOmiu7IbgmJoh9ab2yz+3HwTtMD6ebMqx3+20RsZD/HVum1Eg0=
 DEBUG=True
 DEFAULT_ORIGIN=http://localhost:9000
+ACCOUNT_WHITELIST=horse_js,passy,sindresorhus
 ```
 
 ## API

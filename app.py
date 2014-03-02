@@ -135,7 +135,9 @@ def logout():
 @twitter.authorized_handler
 def oauthorized(resp):
     if resp is None:
-        json_abort(403, 'You denied the request to sign in.')
+        return json_abort(403, 'You denied the request to sign in.')
+    elif not verify_account(resp):
+        return json_abort(403, 'Your account has not been whitelisted yet.')
     else:
         session['twitter_oauth'] = resp
 
@@ -144,6 +146,17 @@ def oauthorized(resp):
         return redirect(request.args['next'])
     else:
         return jsonify({'message': 'You are successfully authorized'})
+
+
+def verify_account(resp):
+    """If an account whitelist is set, check that the given screen name is
+    part of it.
+    """
+    whitelist = os.environ.get('ACCOUNT_WHITELIST')
+    if whitelist is None:
+        return True
+
+    return resp['screen_name'] in whitelist.split(',')
 
 
 if __name__ == '__main__':

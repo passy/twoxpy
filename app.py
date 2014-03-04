@@ -156,7 +156,8 @@ def verify_account(resp):
     if whitelist is None:
         return True
 
-    return resp['screen_name'] in whitelist.split(',')
+    return resp['screen_name'].lower() in [w.lower() for w in
+                                           whitelist.split(',')]
 
 
 if __name__ == '__main__':

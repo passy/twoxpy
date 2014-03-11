@@ -112,6 +112,11 @@ def proxy(endpoint):
                       content_type=content_type,
                       data=data)
 
+    if type(api_resp.data) is list:
+        # This will never happen, right? Because people know that this is bad.
+        # RIGHT?
+        api_resp.data = { 'data': api_resp.data }
+
     resp = jsonify(api_resp.data)
     resp.status_code = api_resp.status
     return resp

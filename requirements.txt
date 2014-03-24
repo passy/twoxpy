@@ -1,8 +1,8 @@
 Flask==0.10.1
-Flask-OAuthlib==0.4.2
+Flask-OAuthlib==0.4.3
 Jinja2==2.7.2
-MarkupSafe==0.18
+MarkupSafe==0.19
 Werkzeug==0.9.4
-itsdangerous==0.23
-oauthlib==0.6.0
 gunicorn==18.0
+itsdangerous==0.23
+oauthlib==0.6.1
